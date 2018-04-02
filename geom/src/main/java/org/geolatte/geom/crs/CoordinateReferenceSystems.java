@@ -30,7 +30,7 @@ import java.util.List;
  * Common coordinate reference systems.
  *
  * @author Karel Maesen, Geovise BVBA
- *         creation-date: 3/31/14
+ * creation-date: 3/31/14
  */
 public class CoordinateReferenceSystems {
 
@@ -99,7 +99,7 @@ public class CoordinateReferenceSystems {
     @SuppressWarnings("unchecked")
     public static <P extends Position, R extends P> CompoundCoordinateReferenceSystem<R> combine
     (CoordinateReferenceSystem<P> base, SingleCoordinateReferenceSystem ods, Class<R> resultCSPtype) {
-        return (CompoundCoordinateReferenceSystem<R>)combine(base,ods);
+        return (CompoundCoordinateReferenceSystem<R>) combine(base, ods);
     }
 
     public static <P extends Position, R extends P> CompoundCoordinateReferenceSystem<R> addLinearSystem
@@ -167,13 +167,31 @@ public class CoordinateReferenceSystems {
     final public static CompoundCoordinateReferenceSystem<C3DM> PROJECTED_3DM_METER = addLinearSystem(PROJECTED_3D_METER,
             C3DM.class, Unit.METER);
 
-            /**
-             * The WGS 84 {@code GeographicCoordinateReferenceSystem}
-             */
+    /**
+     * The WGS 84 {@code GeographicCoordinateReferenceSystem}
+     */
     public static Geographic2DCoordinateReferenceSystem WGS84 = CrsRegistry
             .getGeographicCoordinateReferenceSystemForEPSG(4326);
 
-    public static <P extends Position> boolean hasAxisOrder(CoordinateReferenceSystem<P> crs, int order){
+    /**
+     * The WGS 84/Pseudo-Mercator {@code ProjectedCoordinateReferenceSystem}
+     *
+     * This is de de facto standard for Web mapping applications. See <a href="https://en.wikipedia.org/wiki/Web_Mercator#Identifiers">this Wikipedia article</a>
+     * for more information, and some warnings of its use.
+     */
+    public static ProjectedCoordinateReferenceSystem WEB_MERCATOR = CrsRegistry
+            .getProjectedCoordinateReferenceSystemForEPSG(3857);
+
+    /**
+     * The European ETRS89 geographic reference system.
+     *
+     * This system can be used for all of Europe.
+     */
+    public static GeographicCoordinateReferenceSystem ETRS89 = CrsRegistry
+            .getGeographicCoordinateReferenceSystemForEPSG(4258);
+
+
+    public static <P extends Position> boolean hasAxisOrder(CoordinateReferenceSystem<P> crs, int order) {
         CoordinateSystemAxis[] axes = crs.getCoordinateSystem().getAxes();
         for (CoordinateSystemAxis axis : axes) {
             if (axis.getNormalOrder() == order) {
